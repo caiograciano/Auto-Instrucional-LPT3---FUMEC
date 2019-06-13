@@ -27,6 +27,7 @@ import controller.SisComException;
 import model.Cliente;
 import model.Fornecedor;
 import model.Produto;
+import model.Vendedor;
 import utilitarios.LtpLib;
 
 import java.awt.GridBagLayout;
@@ -67,6 +68,8 @@ public class TelaCliente extends JFrame {
 	private JTable tableClienteCPF;
 	private JTable tableProdutos;
 	private JTable tableCarrinho;
+	private JTextField txtCodVendedorVenda;
+	private JTable tableCodVendedor;
 
 	public TelaCliente() {
 		addKeyListener(new KeyAdapter() {
@@ -97,7 +100,7 @@ public class TelaCliente extends JFrame {
 		getContentPane().setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBackground(Color.MAGENTA);
+		tabbedPane.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBounds(0, 0, 1194, 560);
 		getContentPane().add(tabbedPane);
@@ -374,12 +377,12 @@ public class TelaCliente extends JFrame {
 				panelVenda, null);
 		panelVenda.setLayout(null);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(12, 8, 1165, 66);
-		panel_1.setBorder(new TitledBorder(null, "Pesquisa", TitledBorder.CENTER, TitledBorder.TOP, null,
+		JPanel panel_CPF = new JPanel();
+		panel_CPF.setBounds(12, 8, 558, 66);
+		panel_CPF.setBorder(new TitledBorder(null, "Pesquisa Cliente", TitledBorder.CENTER, TitledBorder.TOP, null,
 
 				new Color(102, 150, 153)));
-		panelVenda.add(panel_1);
+		panelVenda.add(panel_CPF);
 
 		JLabel lblDigiteOCpf = new JLabel("Digite o CPF :");
 		lblDigiteOCpf.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -387,7 +390,7 @@ public class TelaCliente extends JFrame {
 		textCPFVenda = new JTextField();
 		textCPFVenda.setColumns(10);
 
-		JButton button_2 = new JButton("Procurar");
+		JButton button_2 = new JButton("");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -406,11 +409,9 @@ public class TelaCliente extends JFrame {
 
 						row[0] = cliente.getCodigo();
 						row[1] = cliente.getNome();
-						row[2] = cliente.getEmail();
-						row[3] = cliente.getCpf();
-						row[4] = LtpLib.obterDataFormatada(cliente.getDataCad());
-						row[5] = cliente.getTelefone();
-						row[6] = cliente.getLimiteCredito();
+						row[2] = cliente.getCpf();
+						row[3] = cliente.getTelefone();
+						row[4] = cliente.getLimiteCredito();
 
 						model.addRow(row);
 
@@ -423,38 +424,127 @@ public class TelaCliente extends JFrame {
 			}
 		});
 		button_2.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/busca.png")));
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGap(0, 1155, Short.MAX_VALUE)
-				.addGroup(gl_panel_1.createSequentialGroup().addContainerGap()
-						.addComponent(lblDigiteOCpf, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textCPFVenda, GroupLayout.PREFERRED_SIZE, 664, GroupLayout.PREFERRED_SIZE)
-						.addGap(31).addComponent(button_2, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-						.addContainerGap()));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGap(0, 66, Short.MAX_VALUE)
-				.addGroup(gl_panel_1.createSequentialGroup()
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblDigiteOCpf, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textCPFVenda, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(button_2))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		panel_1.setLayout(gl_panel_1);
+		GroupLayout gl_panel_CPF = new GroupLayout(panel_CPF);
+		gl_panel_CPF.setHorizontalGroup(
+			gl_panel_CPF.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_CPF.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblDigiteOCpf)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(textCPFVenda, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(24, Short.MAX_VALUE))
+		);
+		gl_panel_CPF.setVerticalGroup(
+			gl_panel_CPF.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_CPF.createSequentialGroup()
+					.addGroup(gl_panel_CPF.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDigiteOCpf, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textCPFVenda, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(button_2))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_CPF.setLayout(gl_panel_CPF);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(12, 86, 1165, 41);
-		panelVenda.add(scrollPane_1);
+		JScrollPane scrollPane_CPF = new JScrollPane();
+		scrollPane_CPF.setBounds(12, 86, 558, 41);
+		panelVenda.add(scrollPane_CPF);
 
 		tableClienteCPF = new JTable();
 		tableClienteCPF.setFillsViewportHeight(true);
-		scrollPane_1.setViewportView(tableClienteCPF);
+		scrollPane_CPF.setViewportView(tableClienteCPF);
 
 		DefaultTableModel model1 = (DefaultTableModel) tableClienteCPF.getModel();
-		Object[] titleJTable1 = { "ID", "Nome", "Email", "Cpf", "Data cadastrada", "Telefone", "Limite Credito" };
+		Object[] titleJTable1 = { "ID", "Nome","CPF", "Telefone", "Limite Credito" };
 
 		for (int i = 0; i < titleJTable1.length; i++) {
 			model1.addColumn(titleJTable1[i]);
 		}
 		setVisible(true);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Pesquisa Vendedor", TitledBorder.CENTER, TitledBorder.TOP, null,
+		
+						new Color(102, 150, 153)));
+		panel_1.setBounds(598, 8, 579, 66);
+		panelVenda.add(panel_1);
+		
+		JLabel lblDigiteOCdigo = new JLabel("Digite o C\u00F3digo :");
+		lblDigiteOCdigo.setFont(new Font("Dialog", Font.BOLD, 16));
+		
+		txtCodVendedorVenda = new JTextField();
+		txtCodVendedorVenda.setColumns(10);
+		
+		JButton btnP = new JButton("");
+		btnP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String vendedorCod = txtCodVendedorVenda.getText();
+				if (vendedorCod.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Digite Um Código Para Realizar a Busca!", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					DefaultTableModel model = (DefaultTableModel) tableCodVendedor.getModel();
+
+					try {
+						//LimpaJtable(model);
+
+						Vendedor vendedor = (Vendedor) Comercial.consultarCpf(txtCodVendedorVenda.getText(), "vendedor");
+
+						Object[] row = new Object[3];
+
+						row[0] = vendedor.getCodigo();
+						row[1] = vendedor.getNome();
+						row[2] = vendedor.getCpf();
+
+						model.addRow(row);
+
+					} catch (SisComException e) {
+						System.err.println(e.getMessage());
+					}
+
+				}
+			}
+		});
+		btnP.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/busca.png")));
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblDigiteOCdigo, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+					.addGap(2)
+					.addComponent(txtCodVendedorVenda, GroupLayout.PREFERRED_SIZE, 302, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnP, GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDigiteOCdigo, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnP)
+						.addComponent(txtCodVendedorVenda, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_1.setLayout(gl_panel_1);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(598, 86, 579, 41);
+		panelVenda.add(scrollPane_1);
+		
+		tableCodVendedor = new JTable();
+		DefaultTableModel model11 = (DefaultTableModel) tableCodVendedor.getModel();
+		Object[] titleJTable11 = { "ID", "Nome", "CPF"};
+
+		for (int i = 0; i < titleJTable11.length; i++) {
+			model11.addColumn(titleJTable11[i]);
+		}
+		
+		setVisible(true);
+		tableCodVendedor.setFillsViewportHeight(true);
+		scrollPane_1.setViewportView(tableCodVendedor);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(12, 132, 277, 373);
@@ -572,13 +662,18 @@ public class TelaCliente extends JFrame {
 		panelVenda.add(btnRemoveCarrinho);
 
 		JLabel label_5 = new JLabel("Valor Total : R$");
-		label_5.setBounds(579, 489, 126, 16);
+		label_5.setBounds(524, 489, 181, 16);
 		label_5.setForeground(Color.BLACK);
 		label_5.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 16));
 		label_5.setBackground(Color.GREEN);
 		panelVenda.add(label_5);
 
 		JButton btnVender = new JButton("VENDER");
+		btnVender.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//efetuarVenda();
+			}
+		});
 		btnVender.setBounds(976, 479, 201, 38);
 		btnVender.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/check32x32.png")));
 		panelVenda.add(btnVender);
@@ -685,4 +780,6 @@ public class TelaCliente extends JFrame {
 			System.out.println(e.getMessage());
 		}
 	}
+
+
 }

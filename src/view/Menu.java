@@ -54,16 +54,16 @@ public class Menu extends JFrame {
 		lblNewLabel.setFont(new Font("Book Antiqua", Font.BOLD, 18));
 		
 				JLabel lblData = new JLabel("data");
-				lblData.setBounds(326, 29, 127, 34);
+				lblData.setBounds(369, 29, 84, 40);
 				panel.add(lblData);
-				lblData.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
-				lblData.setForeground(SystemColor.textHighlight);
+				lblData.setFont(new Font("Calibri Light", Font.BOLD | Font.ITALIC, 15));
+				lblData.setForeground(new Color(0, 120, 215));
 				
 						JLabel lblHora = new JLabel("hora");
-						lblHora.setBounds(155, 29, 127, 34);
+						lblHora.setBounds(148, 29, 96, 40);
 						panel.add(lblHora);
-						lblHora.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 15));
-						lblHora.setForeground(SystemColor.textHighlight);
+						lblHora.setFont(new Font("Calibri Light", Font.BOLD | Font.ITALIC, 15));
+						lblHora.setForeground(new Color(0, 120, 215));
 		
 		Thread horario = new Thread(new Runnable() {
 

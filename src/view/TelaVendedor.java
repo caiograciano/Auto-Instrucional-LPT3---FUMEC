@@ -73,6 +73,7 @@ public class TelaVendedor extends JFrame {
 		setBounds(x, y, width, height);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		JPanel panelClienteCadastro = new JPanel();

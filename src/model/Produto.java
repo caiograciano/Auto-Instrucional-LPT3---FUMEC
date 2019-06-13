@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Produto implements Comparable<Produto>, Serializable{
 	/**
-	 * 
+	 * @author Caio
 	 */
 	private static final long serialVersionUID = 1L;
 	private int codigo;

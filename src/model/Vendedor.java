@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Vendedor extends Pessoa implements Serializable{
 	/**
-	 * 
+	 * @author Caio
 	 */
 	private static final long serialVersionUID = 1L;
 	

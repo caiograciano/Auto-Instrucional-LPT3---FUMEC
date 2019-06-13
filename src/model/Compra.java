@@ -10,7 +10,7 @@ import java.util.Date;
 public class Compra implements Serializable{
 	
 	/**
-	 * 
+	 * @author Caio 
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ItemCompra> itemCompra = new ArrayList<ItemCompra>();

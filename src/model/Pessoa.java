@@ -6,7 +6,7 @@ import java.util.Date;
 
 public abstract class Pessoa implements Serializable , Comparable<Pessoa>{
 	/**
-	 * 
+	 * @author Caio
 	 */
 	private static final long serialVersionUID = 1L;
 	

@@ -85,6 +85,7 @@ public class TelaProdutos extends JFrame {
 		setBounds(x, y, width, height);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		JPanel panelClienteCadastro = new JPanel();
@@ -206,13 +207,14 @@ public class TelaProdutos extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				DefaultTableModel model = (DefaultTableModel) tableBusca.getModel();
-				
-				//EXECUTA AO SER PRESIONADA E TECLA ENTER SOMENTE 
+
+				// EXECUTA AO SER PRESIONADA E TECLA ENTER SOMENTE
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 
 					try {
 						LimparTabela(model);
-						Produto produtos = (Produto) Comercial.consultarCodigoProduto(Integer.parseInt(textCodigoProduto.getText()));
+						Produto produtos = (Produto) Comercial
+								.consultarCodigoProduto(Integer.parseInt(textCodigoProduto.getText()));
 						Object[] row = new Object[6];
 
 						row[0] = produtos.getCodigo();
@@ -231,12 +233,12 @@ public class TelaProdutos extends JFrame {
 					}
 				}
 
-				//EXECUTA AO SER PRESIONADA QUALQUER  TECLA 
+				// EXECUTA AO SER PRESIONADA QUALQUER TECLA
 				try {
 
-
 					LimparTabela(model);
-					Produto produtos = (Produto) comercial.consultarCodigoProduto(Integer.parseInt(textCodigoProduto.getText()));
+					Produto produtos = (Produto) comercial
+							.consultarCodigoProduto(Integer.parseInt(textCodigoProduto.getText()));
 					Object[] row = new Object[6];
 
 					row[0] = produtos.getCodigo();
@@ -257,7 +259,7 @@ public class TelaProdutos extends JFrame {
 
 			private void LimparTabela(DefaultTableModel model) {
 				model.setRowCount(0);
-				
+
 			}
 		});
 		textCodigoProduto.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
@@ -270,29 +272,67 @@ public class TelaProdutos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel model = (DefaultTableModel) tableBusca.getModel();
 
-				/*
-				 * try { //LimpaJtable(model); String codigoproduto =
-				 * textCodigoProduto.getText(); if (codigoproduto.isEmpty()) {
-				 * JOptionPane.showMessageDialog(null, "Digite Um CPF Para Realizar a Busca!",
-				 * "Erro", JOptionPane.ERROR_MESSAGE); } else { Produto produto = (Produto)
-				 * Comercial.consultarCodigoProduto(textCodigoProduto.getText());
-				 * 
-				 * Object[] row = new Object[7];
-				 * 
-				 * row[0] = cliente.getCodigo(); row[1] = cliente.getNome(); row[2] =
-				 * cliente.getEmail(); row[3] = cliente.getCpf(); row[4] =
-				 * LtpLib.obterDataFormatada(cliente.getDataCad()); row[5] =
-				 * cliente.getTelefone(); row[6] = cliente.getLimiteCredito();
-				 * 
-				 * model.addRow(row); }
-				 * 
-				 * } catch (SisComException e) { System.err.println(e.getMessage()); }
-				 */
+				// EXECUTA AO SER PRESIONADA E TECLA ENTER SOMENTE
+				String codigoProd = textCodigoProduto.getText();
+				if (codigoProd.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Digite Um Código Para Realizar a Busca!", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					
+				
+				try {
+					model.setRowCount(0);;
+					Produto produtos = (Produto) Comercial.consultarCodigoProduto(Integer.parseInt(textCodigoProduto.getText()));
+					Object[] row = new Object[6];
+
+					row[0] = produtos.getCodigo();
+					row[1] = produtos.getNome();
+					row[2] = produtos.getPrecoUnitario();
+					row[3] = produtos.getEstoque();
+					row[4] = produtos.getEstoqueMinimo();
+					row[5] = LtpLib.obterDataFormatada(produtos.getDataCadastrada());
+
+					model.addRow(row);
+
+				} catch (SisComException o) {
+					System.err.println(o.getMessage());
+				} catch (NumberFormatException b) {
+					// JOptionPane.showMessageDialog(null, "Informe apenas números");
+				}
+			}
+
 			}
 		});
 		btnPesquisar.setIcon(new ImageIcon(TelaProdutos.class.getResource("/icones/busca.png")));
-		btnPesquisar.setBounds(839, 13, 259, 44);
+		btnPesquisar.setBounds(817, 12, 154, 44);
 		panel.add(btnPesquisar);
+
+		JButton btnListarTodos = new JButton("LISTAR TODOS");
+		btnListarTodos.setIcon(new ImageIcon(TelaProdutos.class.getResource("/icones/lista32x32.png")));
+		btnListarTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel model = (DefaultTableModel) tableBusca.getModel();
+
+				ArrayList<Produto> listaProdutos = Comercial.getListaProduto();
+
+				Object[] data = new Object[6];
+				model.setRowCount(0);
+				for (int i = 0; i < listaProdutos.size(); i++) {
+
+					data[0] = listaProdutos.get(i).getCodigo();
+					data[1] = listaProdutos.get(i).getNome();
+					data[2] = listaProdutos.get(i).getPrecoUnitario();
+					data[3] = listaProdutos.get(i).getEstoque();
+					data[4] = listaProdutos.get(i).getEstoqueMinimo();
+					data[5] = LtpLib.obterDataFormatada(listaProdutos.get(i).getDataCadastrada());
+
+					model.addRow(data);
+				}
+
+			}
+		});
+		btnListarTodos.setBounds(983, 11, 176, 44);
+		panel.add(btnListarTodos);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Opções Avançadas ", TitledBorder.CENTER, TitledBorder.TOP, null,
@@ -418,6 +458,7 @@ public class TelaProdutos extends JFrame {
 		setVisible(true);
 
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -425,14 +466,33 @@ public class TelaProdutos extends JFrame {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+	}
+
+	public DefaultTableModel mostraTabelaDeProdutosTotal(ArrayList<Produto> listaProdutos) {
+
+		Object[] titleRow = { "Código", "Nome", "Preço Unitário" };
+		Object[][] data = new Object[listaProdutos.size()][titleRow.length];
+
+		for (int i = 0; i < listaProdutos.size(); i++) {
+
+			data[i][0] = listaProdutos.get(i).getCodigo();
+			data[i][1] = listaProdutos.get(i).getNome();
+			data[i][2] = listaProdutos.get(i).getPrecoUnitario();
+		}
+
+		DefaultTableModel model = new DefaultTableModel(data, titleRow);
+
+		return model;
 	}
 }

@@ -31,12 +31,19 @@ public class Splash extends JWindow {
 		setBounds(x, y, width, height);
 
 		// Constrói o splash screen
+		
 		JLabel imgsplash1 = new JLabel(new ImageIcon("images/carrinho.png"));
 		JLabel imgsplash2 = new JLabel(new ImageIcon("images/carregando.gif"));
 		
+		JLabel Sicom = new JLabel("SISCOM 1.0", JLabel.CENTER);
+		Sicom.setFont(new Font("Sans-Serif", Font.BOLD, 35));
+		Sicom.setForeground(new Color(0, 120, 215));
+		content.add(Sicom, BorderLayout.NORTH);
+		
 		JLabel copyrt = new JLabel("Auto Instrucional 2018 LTP3 - Caio Graciano", JLabel.CENTER);
 		copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 15));
-		content.add(imgsplash1, BorderLayout.NORTH);
+		copyrt.setForeground(new Color(0, 120, 215));
+		content.add(imgsplash1, BorderLayout.LINE_START);
 		content.add(imgsplash2, BorderLayout.CENTER);
 	
 		

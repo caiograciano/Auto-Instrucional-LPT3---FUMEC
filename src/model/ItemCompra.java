@@ -10,7 +10,7 @@ public class ItemCompra implements Serializable{
 
 	
 	/**
-	 * 
+	 * @author Caio
 	 */
 	private static final long serialVersionUID = 1L;
 	private Produto produto;

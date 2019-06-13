@@ -97,6 +97,7 @@ public class TelaFornecedor extends JFrame {
 		setBounds(x, y, width, height);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		JPanel panelFornecedorCadastro = new JPanel();
@@ -536,6 +537,15 @@ public class TelaFornecedor extends JFrame {
 		VrTotal.setBounds(772, 479, 107, 16);
 		panelFornecedorCompra.add(VrTotal);
 		JButton btnNewButton_1 = new JButton("Comprar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				efetuarCompra(VrTotal);
+			}
+
+			
+		});
+		
+		
 		btnNewButton_1.setIcon(new ImageIcon(TelaFornecedor.class.getResource("/icones/check32x32.png")));
 		btnNewButton_1.setBounds(976, 467, 201, 38);
 		panelFornecedorCompra.add(btnNewButton_1);
@@ -636,6 +646,11 @@ public class TelaFornecedor extends JFrame {
 
 		setVisible(true);
 
+	}
+
+	protected void efetuarCompra(JLabel VrTotal) {
+		
+		
 	}
 
 	public DefaultTableModel mostraTabelaDeProdutosTotal(ArrayList<Produto> listaProdutos) {

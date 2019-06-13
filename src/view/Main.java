@@ -21,7 +21,7 @@ public class Main {
 		lerArquivos();
 
 		// Chama a tela de SPLASH
-		Splash splash = new Splash(3000);
+		Splash splash = new Splash(4000);
 		splash.showSplashAndExit();
 
 		new Menu();
